@@ -2,25 +2,31 @@ import { useApp } from '@/context/AppContext';
 import { useToast } from '@/context/ToastContext';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { getErrorMessage } from '@/lib/format';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function LoginPage() {
   usePageTitle('Entrar');
-  const { login, busy } = useApp();
+  const { login, busy, isDemoMode } = useApp();
   const { push } = useToast();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (isDemoMode) {
+      setEmail('demo@fincontrol.app');
+      setPassword('123456');
+    }
+  }, [isDemoMode]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
-    const fd = new FormData(e.currentTarget);
-    const email = String(fd.get('email') ?? '');
-    const password = String(fd.get('password') ?? '');
     try {
       await login(email, password);
-      push('Sessão iniciada.', 'success');
+      push('Sessao iniciada.', 'success');
       navigate('/app/overview', { replace: true });
     } catch (err) {
       const msg = getErrorMessage(err);
@@ -37,6 +43,12 @@ export function LoginPage() {
         Use o email e a senha cadastrados na API FinControl.
       </p>
 
+      {isDemoMode ? (
+        <p className="fc-auth__demo">
+          Modo demonstracao ativo. Use <strong>demo@fincontrol.app</strong> e <strong>123456</strong>.
+        </p>
+      ) : null}
+
       {error ? (
         <p role="alert" className="fc-auth__lead" style={{ color: 'var(--fc-danger)' }}>
           {error}
@@ -51,6 +63,8 @@ export function LoginPage() {
             name="email"
             type="email"
             className="fc-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
             placeholder="nome@email.com"
@@ -63,12 +77,14 @@ export function LoginPage() {
             name="password"
             type="password"
             className="fc-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
           />
         </div>
         <button type="submit" className="fc-btn fc-btn--primary" disabled={busy} style={{ width: '100%' }}>
-          {busy ? 'Entrando…' : 'Entrar'}
+          {busy ? 'Entrando...' : 'Entrar'}
         </button>
       </form>
 

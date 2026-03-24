@@ -10,6 +10,7 @@ export function SettingsPage() {
     apiUrl,
     setApiUrl,
     dataProvider,
+    isDemoMode,
     syncAll,
     checkHealth,
     busy,
@@ -94,9 +95,11 @@ export function SettingsPage() {
           <strong>
             {dataProvider === 'prisma'
               ? 'PostgreSQL / Prisma'
-              : dataProvider === 'json'
-                ? 'Arquivos JSON'
-                : 'Não identificado'}
+              : dataProvider === 'demo'
+                ? 'Navegador / Demo local'
+                : dataProvider === 'json'
+                  ? 'Arquivos JSON'
+                  : 'Nao identificado'}
           </strong>
         </p>
         <div className="fc-field">
@@ -110,7 +113,7 @@ export function SettingsPage() {
             disabled={busy}
             onClick={async () => {
               const ok = await checkHealth();
-              push(ok ? 'API respondeu.' : 'API offline ou inacessível.', ok ? 'success' : 'error');
+              push(ok ? 'API respondeu.' : 'API offline ou inacessivel.', ok ? 'success' : 'error');
             }}
           >
             Testar API
@@ -131,7 +134,7 @@ export function SettingsPage() {
             className="fc-btn fc-btn--danger"
             onClick={() => {
               logout();
-              push('Sessão encerrada.', 'info');
+              push('Sessao encerrada.', 'info');
               navigate('/login', { replace: true });
             }}
           >
@@ -139,8 +142,13 @@ export function SettingsPage() {
           </button>
         </div>
         <p style={{ fontSize: '0.85rem', color: 'var(--fc-muted)', marginTop: 16 }}>
-          Token, URL da API e tema usam as mesmas chaves de localStorage da versão anterior (fincontrol.*).
+          Token, URL da API e tema usam as mesmas chaves de localStorage da versao anterior (fincontrol.*).
         </p>
+        {isDemoMode ? (
+          <p style={{ fontSize: '0.85rem', color: 'var(--fc-muted)', marginTop: 8 }}>
+            Este site esta rodando em modo demo direto no navegador. Para usar um backend real, troque a URL da API e sincronize.
+          </p>
+        ) : null}
       </section>
     </div>
   );

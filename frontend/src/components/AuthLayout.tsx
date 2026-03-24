@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { ReactNode } from 'react';
 
 export function AuthLayout({ children }: { children: ReactNode }) {
-  const { theme, setTheme, apiUrl, setApiUrl } = useApp();
+  const { theme, setTheme, apiUrl, setApiUrl, isDemoMode } = useApp();
 
   return (
     <div className="fc-auth">
@@ -22,6 +22,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
               autoComplete="off"
             />
           </label>
+          {isDemoMode ? <span className="fc-auth__badge">Demo web</span> : null}
           <div className="fc-theme-toggle" role="group" aria-label="Tema">
             <button
               type="button"

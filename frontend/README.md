@@ -16,7 +16,7 @@ Interface em **React 19 + Vite 6 + TypeScript**, com **React Router 7** para rot
 | `/app/reports` | Relatorios |
 | `/app/settings` | Configuracoes e perfil |
 
-`/` redireciona para `/login` ou `/app/overview` conforme a sessao.
+`/` abre a landing page inicial. A partir dela, o utilizador segue para login ou para o painel.
 
 ## LocalStorage (compativel com a versao anterior)
 
@@ -51,6 +51,11 @@ O `Dockerfile` faz build da SPA e serve com **nginx** (fallback para `index.html
 ## GitHub Pages
 
 O frontend ja esta preparado para publicacao no GitHub Pages via workflow em `.github/workflows/deploy-pages.yml`.
+
+Sem nenhuma configuracao adicional, o site publicado entra em `modo demo` no navegador e fica utilizavel com:
+
+- email: `demo@fincontrol.app`
+- senha: `123456`
 
 Para o site funcionar online com dados reais:
 

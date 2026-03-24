@@ -1,3 +1,5 @@
+import { demoApiFetch, isDemoApiUrl } from '@/api/demoApi';
+
 function normalizeBase(url: string): string {
   return url.trim().replace(/\/$/, '');
 }
@@ -11,6 +13,17 @@ export async function apiFetch<T>(
   const headers: Record<string, string> = {
     ...(hdrs as Record<string, string> | undefined),
   };
+
+  if (isDemoApiUrl(baseUrl)) {
+    return demoApiFetch<T>(normalizeBase(baseUrl), path, {
+      ...init,
+      method,
+      token,
+      jsonBody,
+      signal,
+      headers,
+    });
+  }
 
   if (jsonBody !== undefined) {
     headers['Content-Type'] = 'application/json';

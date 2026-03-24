@@ -1,3 +1,4 @@
+import { demoApiUrl, isDemoApiUrl } from '@/api/demoApi';
 import { apiFetch } from '@/api/fetcher';
 import { safeGetItem, safeRemoveItem, safeSetItem } from '@/lib/safeStorage';
 import { storageKeys } from '@/lib/storageKeys';
@@ -46,6 +47,7 @@ export type AppContextValue = {
   goals: Goal[];
   reports: ReportsPayload;
   dataProvider: string;
+  isDemoMode: boolean;
   apiStatus: ApiStatus;
   includeInactiveAccounts: boolean;
   setIncludeInactiveAccounts: (v: boolean) => void;
@@ -90,6 +92,10 @@ function readStoredApiUrl(): string {
     return envUrl;
   }
 
+  if (import.meta.env.PROD) {
+    return demoApiUrl;
+  }
+
   return 'http://localhost:3333';
 }
 
@@ -114,6 +120,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [includeInactiveAccounts, setIncludeInactiveAccounts] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
+  const isDemoMode = isDemoApiUrl(apiUrl);
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);
@@ -461,6 +468,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       goals,
       reports,
       dataProvider,
+      isDemoMode,
       apiStatus,
       includeInactiveAccounts,
       setIncludeInactiveAccounts,
@@ -493,6 +501,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       goals,
       reports,
       dataProvider,
+      isDemoMode,
       apiStatus,
       includeInactiveAccounts,
       busy,
