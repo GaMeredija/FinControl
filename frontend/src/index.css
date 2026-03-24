@@ -179,6 +179,62 @@ textarea {
   padding: clamp(24px, 5vw, 48px);
 }
 
+.fc-landing {
+  width: min(100%, 720px);
+  text-align: center;
+  padding: clamp(28px, 6vw, 56px) clamp(20px, 5vw, 40px);
+}
+
+.fc-landing__eyebrow {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--fc-brand);
+}
+
+.fc-landing h1 {
+  margin: 0;
+  font-family: var(--fc-font-display);
+  font-size: clamp(2.8rem, 9vw, 5.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.fc-landing__lead {
+  width: min(100%, 560px);
+  margin: 20px auto 0;
+  color: var(--fc-muted);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+}
+
+.fc-landing__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.fc-landing__button {
+  min-width: 200px;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.fc-landing__secondary {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .fc-landing__actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
 .fc-auth__card {
   width: min(100%, 440px);
   padding: clamp(28px, 4vw, 40px);

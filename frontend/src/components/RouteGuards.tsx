@@ -37,13 +37,3 @@ export function GuestOnly({ children }: { children: ReactNode }) {
 
   return children;
 }
-
-export function HomeRedirect() {
-  const { user } = useApp();
-
-  if (user) {
-    return <Navigate to="/app/overview" replace />;
-  }
-
-  return <Navigate to="/login" replace />;
-}

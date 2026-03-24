@@ -3,7 +3,6 @@ import { AuthLayout } from '@/components/AuthLayout';
 import {
   AppBootstrap,
   GuestOnly,
-  HomeRedirect,
   RequireAuth,
 } from '@/components/RouteGuards';
 import { AppProvider } from '@/context/AppContext';
@@ -15,6 +14,7 @@ import { OverviewPage } from '@/pages/app/OverviewPage';
 import { ReportsPage } from '@/pages/app/ReportsPage';
 import { SettingsPage } from '@/pages/app/SettingsPage';
 import { TransactionsPage } from '@/pages/app/TransactionsPage';
+import { LandingPage } from '@/pages/auth/LandingPage';
 import { LoginPage } from '@/pages/auth/LoginPage';
 import { RegisterPage } from '@/pages/auth/RegisterPage';
 import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -31,7 +31,14 @@ export default function App() {
           </a>
           <AppBootstrap>
             <Routes>
-              <Route path="/" element={<HomeRedirect />} />
+              <Route
+                path="/"
+                element={
+                  <AuthLayout>
+                    <LandingPage />
+                  </AuthLayout>
+                }
+              />
 
               <Route
                 path="/login"
