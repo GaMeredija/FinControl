@@ -120,4 +120,5 @@ Detalhes em `database/README.md` e `deploy/README.md`.
 - `docs/04-modelagem.md`
 - `docs/05-arquitetura-api.md`
 - `docs/github-upload.md`
+- `docs/github-pages.md`
 - `database/schema.sql`

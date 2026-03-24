@@ -17,11 +17,13 @@ import { SettingsPage } from '@/pages/app/SettingsPage';
 import { TransactionsPage } from '@/pages/app/TransactionsPage';
 import { LoginPage } from '@/pages/auth/LoginPage';
 import { RegisterPage } from '@/pages/auth/RegisterPage';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 export default function App() {
+  const Router = import.meta.env.PROD ? HashRouter : BrowserRouter;
+
   return (
-    <BrowserRouter>
+    <Router>
       <AppProvider>
         <ToastProvider>
           <a href="#main-content" className="skip-link">
@@ -70,6 +72,6 @@ export default function App() {
           </AppBootstrap>
         </ToastProvider>
       </AppProvider>
-    </BrowserRouter>
+    </Router>
   );
 }

@@ -75,3 +75,13 @@ Na raiz do projeto:
 ## Observacao
 
 Os testes de fumaca continuam isolados no modo `json`, para validar a API sem depender de um PostgreSQL rodando.
+
+## GitHub Pages e CORS
+
+Se o frontend for publicado no GitHub Pages, o backend precisa liberar a origem do site em `CORS_ORIGIN`.
+
+Exemplo:
+
+```env
+CORS_ORIGIN="http://localhost:5173,https://seu-usuario.github.io"
+```

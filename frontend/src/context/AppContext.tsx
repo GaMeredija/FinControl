@@ -80,7 +80,17 @@ function readStoredTheme(): Theme {
 }
 
 function readStoredApiUrl(): string {
-  return safeGetItem(storageKeys.apiUrl)?.trim() || 'http://localhost:3333';
+  const stored = safeGetItem(storageKeys.apiUrl)?.trim();
+  if (stored) {
+    return stored;
+  }
+
+  const envUrl = import.meta.env.VITE_API_URL?.trim();
+  if (envUrl) {
+    return envUrl;
+  }
+
+  return 'http://localhost:3333';
 }
 
 function readStoredToken(): string | null {

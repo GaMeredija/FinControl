@@ -48,6 +48,23 @@ npm run test:smoke
 
 O `Dockerfile` faz build da SPA e serve com **nginx** (fallback para `index.html` para o router).
 
+## GitHub Pages
+
+O frontend ja esta preparado para publicacao no GitHub Pages via workflow em `.github/workflows/deploy-pages.yml`.
+
+Para o site funcionar online com dados reais:
+
+- publique o backend separadamente
+- configure a variavel `VITE_API_URL` no repositorio do GitHub
+
+Exemplo de `.env` local:
+
+```env
+VITE_API_URL="https://seu-backend-publicado.onrender.com"
+```
+
+Detalhes completos em `docs/github-pages.md`.
+
 ## Estrutura `src/`
 
 - `api/` — cliente HTTP
