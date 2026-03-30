@@ -150,7 +150,7 @@ textarea {
   gap: 16px;
   padding: 20px clamp(20px, 4vw, 40px);
   border-bottom: 1px solid var(--fc-line);
-  background: color-mix(in srgb, var(--fc-surface) 88%, transparent);
+  background: var(--fc-surface);
   backdrop-filter: blur(10px);
 }
 
@@ -179,7 +179,7 @@ textarea {
   padding: 0 12px;
   border-radius: 999px;
   border: 1px solid var(--fc-line);
-  background: color-mix(in srgb, var(--fc-accent) 10%, var(--fc-surface));
+  background: var(--fc-surface-2);
   color: var(--fc-text);
   font-size: 0.82rem;
   font-weight: 700;
@@ -195,8 +195,8 @@ textarea {
 .fc-auth__demo {
   margin: -8px 0 20px;
   padding: 10px 12px;
-  border: 1px solid color-mix(in srgb, var(--fc-accent) 30%, var(--fc-line));
-  background: color-mix(in srgb, var(--fc-accent) 10%, var(--fc-surface));
+  border: 1px solid rgba(13, 143, 110, 0.28);
+  background: var(--fc-surface-2);
   border-radius: var(--fc-radius-sm);
   font-size: 0.88rem;
 }
@@ -448,7 +448,7 @@ textarea {
   justify-content: space-between;
   gap: 16px;
   padding: 16px clamp(16px, 3vw, 28px);
-  background: color-mix(in srgb, var(--fc-bg) 92%, transparent);
+  background: var(--fc-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--fc-line);
 }
@@ -580,7 +580,7 @@ textarea {
 .fc-btn--danger {
   background: transparent;
   color: var(--fc-danger);
-  border: 1px solid color-mix(in srgb, var(--fc-danger) 35%, var(--fc-line));
+  border: 1px solid rgba(196, 61, 61, 0.38);
 }
 
 .fc-btn--sm {
@@ -664,8 +664,8 @@ textarea {
 }
 
 .fc-stat--accent {
-  border-color: color-mix(in srgb, var(--fc-accent) 35%, var(--fc-line));
-  background: color-mix(in srgb, var(--fc-accent) 8%, var(--fc-surface));
+  border-color: rgba(13, 143, 110, 0.34);
+  background: rgba(13, 143, 110, 0.08);
 }
 
 .fc-pill {
@@ -678,12 +678,12 @@ textarea {
 }
 
 .fc-pill--ok {
-  background: color-mix(in srgb, var(--fc-accent) 18%, transparent);
+  background: rgba(13, 143, 110, 0.18);
   color: var(--fc-accent);
 }
 
 .fc-pill--off {
-  background: color-mix(in srgb, var(--fc-danger) 16%, transparent);
+  background: rgba(196, 61, 61, 0.16);
   color: var(--fc-danger);
 }
 
@@ -830,11 +830,11 @@ textarea {
 }
 
 .toast--success {
-  border-color: color-mix(in srgb, var(--fc-accent) 40%, var(--fc-line));
+  border-color: rgba(13, 143, 110, 0.4);
 }
 
 .toast--error {
-  border-color: color-mix(in srgb, var(--fc-danger) 45%, var(--fc-line));
+  border-color: rgba(196, 61, 61, 0.45);
 }
 
 .fc-inline-label {
@@ -1072,7 +1072,7 @@ textarea {
 }
 
 .fc-trend-chart__expense {
-  fill: color-mix(in srgb, var(--fc-danger) 85%, #ffffff);
+  fill: #d86058;
 }
 
 .fc-trend-chart__legend {
@@ -1101,7 +1101,7 @@ textarea {
 }
 
 .fc-trend-chart__swatch--expense {
-  background: color-mix(in srgb, var(--fc-danger) 85%, #ffffff);
+  background: #d86058;
 }
 
 .fc-report-table {
