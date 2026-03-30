@@ -70,6 +70,16 @@ VITE_API_URL="https://seu-backend-publicado.onrender.com"
 
 Detalhes completos em `docs/github-pages.md`.
 
+## Relatorios
+
+O modulo de relatorios agora inclui:
+
+- grafico de pizza para despesas por categoria
+- grafico historico mensal de receitas x despesas
+- tabela de ranking por categoria
+- tabela de movimentacoes recentes
+- exportacao em PDF diretamente pelo navegador
+
 ## Estrutura `src/`
 
 - `api/` — cliente HTTP

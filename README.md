@@ -10,6 +10,7 @@ Sistema de controle financeiro pessoal pensado para portfolio de ADS, com fluxo 
 - lancamentos
 - metas
 - relatorios e visao geral consolidados
+- relatorios com exportacao em PDF
 - tema claro e escuro
 - frontend separado da tela de login
 - backend com regras de negocio e testes de fumaca
