@@ -18,6 +18,7 @@ Sistema de controle financeiro pessoal pensado para portfolio de ADS, com fluxo 
 ## Stack atual
 
 - frontend: React, Vite, TypeScript e React Router (SPA)
+- mobile: Expo, React Native e TypeScript
 - backend: Node.js, Express e TypeScript
 - autenticacao: JWT com senha criptografada
 - persistencia atual: JSON local
@@ -28,6 +29,7 @@ Sistema de controle financeiro pessoal pensado para portfolio de ADS, com fluxo 
 - `docs/`: documentacao funcional e tecnica
 - `database/`: modelagem SQL e guia do banco
 - `frontend/`: interface administrativa do sistema
+- `mobile/`: aplicativo mobile com Expo
 - `backend/`: API, autenticacao e regras de negocio
 - `scripts/`: atalhos PowerShell para iniciar e validar o projeto
 
@@ -49,6 +51,13 @@ Sistema de controle financeiro pessoal pensado para portfolio de ADS, com fluxo 
 
 ```powershell
 .\scripts\start-frontend.ps1
+```
+
+### Subir mobile
+
+```powershell
+cd mobile
+cmd /c npm run start
 ```
 
 Depois abra:
@@ -79,6 +88,17 @@ Depois abra:
 - `PUT /goals/:id`
 - `DELETE /goals/:id`
 - `GET /reports/summary`
+
+## Mobile
+
+O app em `mobile/` ja inclui:
+
+- boas-vindas, login e cadastro
+- visao geral com atalhos rapidos
+- contas, categorias, lancamentos e metas com operacoes de cadastro e manutencao
+- busca e filtros em lancamentos
+- relatorios mobile com resumo visual
+- configuracao da URL da API dentro do proprio app
 
 ## Persistencia
 
