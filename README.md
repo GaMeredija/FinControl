@@ -100,6 +100,14 @@ O app em `mobile/` ja inclui:
 - relatorios mobile com resumo visual
 - configuracao da URL da API dentro do proprio app
 
+Para gerar um APK Android no GitHub, o repositorio agora possui o workflow:
+
+- `.github/workflows/build-mobile-apk.yml`
+
+Quando ele roda com sucesso, o APK fica publicado na release:
+
+- `https://github.com/GaMeredija/FinControl/releases/tag/mobile-preview-latest`
+
 ## Persistencia
 
 ### Modo padrao

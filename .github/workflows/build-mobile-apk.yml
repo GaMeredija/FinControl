@@ -1,0 +1,78 @@
+name: Build Mobile APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/build-mobile-apk.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: mobile
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install mobile dependencies
+        run: npm ci
+
+      - name: Generate Android project
+        run: npx expo prebuild --platform android --non-interactive --no-install
+
+      - name: Build debug APK
+        working-directory: mobile/android
+        run: ./gradlew assembleDebug
+
+      - name: Prepare APK artifact
+        run: |
+          mkdir -p build-output
+          cp android/app/build/outputs/apk/debug/app-debug.apk build-output/fincontrol-mobile-debug.apk
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fincontrol-mobile-debug-apk
+          path: mobile/build-output/fincontrol-mobile-debug.apk
+
+      - name: Publish preview release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: mobile-preview-latest
+          name: FinControl Mobile Preview
+          body: |
+            APK Android gerado automaticamente pelo workflow do repositório.
+
+            Arquivo:
+            - fincontrol-mobile-debug.apk
+          prerelease: true
+          allowUpdates: true
+          replacesArtifacts: true
+          artifactErrorsFailBuild: true
+          artifacts: mobile/build-output/fincontrol-mobile-debug.apk
