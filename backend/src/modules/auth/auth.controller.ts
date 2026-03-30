@@ -10,7 +10,7 @@ export async function registerController(req: Request, res: Response) {
 
   return res.status(201).json({
     data: result,
-    message: 'Usuario cadastrado com sucesso.',
+    message: 'Usuário cadastrado com sucesso.',
   });
 }
 

@@ -15,7 +15,7 @@ export function ensureAuthenticated(
   const authorizationHeader = req.headers.authorization;
 
   if (!authorizationHeader?.startsWith('Bearer ')) {
-    return next(new AppError(401, 'Token de acesso nao informado.', 'MISSING_TOKEN'));
+    return next(new AppError(401, 'Token de acesso não informado.', 'MISSING_TOKEN'));
   }
 
   const token = authorizationHeader.replace('Bearer ', '').trim();
@@ -28,4 +28,3 @@ export function ensureAuthenticated(
     return next(error);
   }
 }
-

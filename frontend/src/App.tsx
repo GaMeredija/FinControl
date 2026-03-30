@@ -27,7 +27,7 @@ export default function App() {
       <AppProvider>
         <ToastProvider>
           <a href="#main-content" className="skip-link">
-            Ir para o conteudo principal
+            Ir para o conteúdo principal
           </a>
           <AppBootstrap>
             <Routes>

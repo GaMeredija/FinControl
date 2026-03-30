@@ -31,12 +31,12 @@ export function TransactionsPage() {
   const [kindFilter, setKindFilter] = useState<'all' | 'income' | 'expense'>('all');
 
   const orderedAccounts = getOrderedAccounts(accounts, transactions);
-  const catsForKind = categories.filter((c) => c.kind === kind);
+  const catsForKind = categories.filter((category) => category.kind === kind);
 
   useEffect(() => {
     if (!orderedAccounts.length) {
       setAccountId('');
-    } else if (!orderedAccounts.some((a) => a.id === accountId)) {
+    } else if (!orderedAccounts.some((account) => account.id === accountId)) {
       setAccountId(orderedAccounts[0].id);
     }
   }, [orderedAccounts, accountId]);
@@ -44,20 +44,20 @@ export function TransactionsPage() {
   useEffect(() => {
     if (!catsForKind.length) {
       setCategoryId('');
-    } else if (!catsForKind.some((c) => c.id === categoryId)) {
+    } else if (!catsForKind.some((category) => category.id === categoryId)) {
       setCategoryId(catsForKind[0].id);
     }
   }, [catsForKind, categoryId]);
 
-  function startEdit(t: Transaction) {
-    setEditing(t);
-    setDescription(t.description);
-    setKind(t.kind);
-    setAmount(String(t.amount));
-    setAccountId(t.accountId);
-    setCategoryId(t.categoryId);
-    setTransactionDate(t.transactionDate.slice(0, 10));
-    setNotes(t.notes ?? '');
+  function startEdit(transaction: Transaction) {
+    setEditing(transaction);
+    setDescription(transaction.description);
+    setKind(transaction.kind);
+    setAmount(String(transaction.amount));
+    setAccountId(transaction.accountId);
+    setCategoryId(transaction.categoryId);
+    setTransactionDate(transaction.transactionDate.slice(0, 10));
+    setNotes(transaction.notes ?? '');
   }
 
   function reset() {
@@ -116,12 +116,12 @@ export function TransactionsPage() {
     }
   }
 
-  async function remove(t: Transaction) {
+  async function remove(transaction: Transaction) {
     if (!token) {
       return;
     }
     try {
-      const res = await apiFetch<ApiEnvelope<unknown>>(apiUrl, `/transactions/${t.id}`, {
+      const res = await apiFetch<ApiEnvelope<unknown>>(apiUrl, `/transactions/${transaction.id}`, {
         method: 'DELETE',
         token,
       });
@@ -152,7 +152,7 @@ export function TransactionsPage() {
         <h2 style={{ marginTop: 0 }}>{editing ? 'Editar lançamento' : 'Novo lançamento'}</h2>
         <form onSubmit={onSubmit}>
           <div className="fc-field">
-            <span>Descricao</span>
+            <span>Descrição</span>
             <input
               className="fc-input"
               value={description}
@@ -192,10 +192,10 @@ export function TransactionsPage() {
               onChange={(e) => setAccountId(e.target.value)}
               disabled={formDisabled}
             >
-              {orderedAccounts.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.name}
-                  {!a.isActive ? ' (inativa)' : ''}
+              {orderedAccounts.map((account) => (
+                <option key={account.id} value={account.id}>
+                  {account.name}
+                  {!account.isActive ? ' (inativa)' : ''}
                 </option>
               ))}
             </select>
@@ -208,9 +208,9 @@ export function TransactionsPage() {
               onChange={(e) => setCategoryId(e.target.value)}
               disabled={formDisabled}
             >
-              {catsForKind.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
+              {catsForKind.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
                 </option>
               ))}
             </select>
@@ -247,7 +247,7 @@ export function TransactionsPage() {
         <h2 style={{ marginTop: 0 }}>Histórico</h2>
         <div className="fc-field" style={{ marginBottom: 12 }}>
           <span>Busca</span>
-          <input className="fc-input" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Descricao, notas, categoria…" />
+          <input className="fc-input" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Descrição, notas, categoria..." />
         </div>
         <div className="fc-field" style={{ marginBottom: 16 }}>
           <span>Filtro</span>
@@ -261,32 +261,32 @@ export function TransactionsPage() {
         {!filtered.length ? (
           <div className="fc-empty">Nenhum lançamento para os filtros.</div>
         ) : (
-          filtered.map((t) => {
-            const cat = categories.find((c) => c.id === t.categoryId);
-            const acc = accounts.find((a) => a.id === t.accountId);
+          filtered.map((transaction) => {
+            const category = categories.find((item) => item.id === transaction.categoryId);
+            const account = accounts.find((item) => item.id === transaction.accountId);
             return (
-              <article key={t.id} className="fc-data-row">
+              <article key={transaction.id} className="fc-data-row">
                 <div className="fc-data-row__main">
                   <div>
-                    <span className="fc-inline-label">{t.kind === 'income' ? 'Receita' : 'Despesa'}</span>
-                    <h3 style={{ margin: '4px 0' }}>{t.description}</h3>
+                    <span className="fc-inline-label">{transaction.kind === 'income' ? 'Receita' : 'Despesa'}</span>
+                    <h3 style={{ margin: '4px 0' }}>{transaction.description}</h3>
                     <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--fc-muted)' }}>
-                      {cat?.name ?? '—'} · {acc?.name ?? '—'} · {t.transactionDate}
+                      {category?.name ?? '—'} · {account?.name ?? '—'} · {transaction.transactionDate}
                     </p>
-                    {t.notes ? (
-                      <p style={{ margin: '6px 0 0', fontSize: '0.85rem' }}>{t.notes}</p>
+                    {transaction.notes ? (
+                      <p style={{ margin: '6px 0 0', fontSize: '0.85rem' }}>{transaction.notes}</p>
                     ) : null}
                   </div>
-                  <strong className={t.kind === 'income' ? 'fc-tag-pos' : 'fc-tag-neg'}>
-                    {t.kind === 'income' ? '+' : '-'}
-                    {formatCurrency(t.amount)}
+                  <strong className={transaction.kind === 'income' ? 'fc-tag-pos' : 'fc-tag-neg'}>
+                    {transaction.kind === 'income' ? '+' : '-'}
+                    {formatCurrency(transaction.amount)}
                   </strong>
                 </div>
                 <div className="fc-data-row__actions">
-                  <button type="button" className="fc-btn fc-btn--ghost fc-btn--sm" onClick={() => startEdit(t)}>
+                  <button type="button" className="fc-btn fc-btn--ghost fc-btn--sm" onClick={() => startEdit(transaction)}>
                     Editar
                   </button>
-                  <button type="button" className="fc-btn fc-btn--danger fc-btn--sm" onClick={() => remove(t)}>
+                  <button type="button" className="fc-btn fc-btn--danger fc-btn--sm" onClick={() => remove(transaction)}>
                     Remover
                   </button>
                 </div>

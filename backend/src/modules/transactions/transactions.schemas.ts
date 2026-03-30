@@ -16,10 +16,10 @@ const amountSchema = z.preprocess((value) => {
 const transactionDateSchema = z
   .string()
   .trim()
-  .regex(/^\d{4}-\d{2}-\d{2}$/, 'Informe uma data valida no formato YYYY-MM-DD.');
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'Informe uma data válida no formato YYYY-MM-DD.');
 
 export const createTransactionSchema = z.object({
-  description: z.string().trim().min(2, 'Informe uma descricao valida.').max(120),
+  description: z.string().trim().min(2, 'Informe uma descrição válida.').max(120),
   kind: z.enum(['income', 'expense']),
   amount: amountSchema,
   accountId: z.string().trim().min(1, 'Selecione uma conta.'),

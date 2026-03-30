@@ -12,7 +12,7 @@ export function errorHandler(
   if (error instanceof ZodError) {
     return res.status(400).json({
       error: 'VALIDATION_ERROR',
-      message: 'Os dados enviados sao invalidos.',
+      message: 'Os dados enviados são inválidos.',
       details: error.flatten().fieldErrors,
     });
   }

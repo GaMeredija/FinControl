@@ -19,10 +19,10 @@ const amountSchema = z.preprocess((value) => {
   }
 
   return value;
-}, z.number().finite('Informe um valor numerico valido.'));
+}, z.number().finite('Informe um valor numérico válido.'));
 
 export const createAccountSchema = z.object({
-  name: z.string().trim().min(2, 'Informe um nome valido para a conta.').max(60),
+  name: z.string().trim().min(2, 'Informe um nome válido para a conta.').max(60),
   type: accountTypeSchema,
   initialBalance: amountSchema.default(0),
 });
@@ -39,4 +39,3 @@ export const listAccountsQuerySchema = z.object({
 export type CreateAccountInput = z.infer<typeof createAccountSchema>;
 export type UpdateAccountInput = z.infer<typeof updateAccountSchema>;
 export type ListAccountsQuery = z.infer<typeof listAccountsQuerySchema>;
-

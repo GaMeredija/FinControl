@@ -32,7 +32,7 @@ function sanitizeCategory(category: {
 
 function ensureCategoryOwnership(userId: string, categoryUserId: string) {
   if (userId !== categoryUserId) {
-    throw new AppError(404, 'Categoria nao encontrada.', 'CATEGORY_NOT_FOUND');
+    throw new AppError(404, 'Categoria não encontrada.', 'CATEGORY_NOT_FOUND');
   }
 }
 
@@ -42,7 +42,7 @@ async function ensureUniqueCategory(userId: string, name: string, kind: string, 
   if (existingCategory && existingCategory.id !== ignoreId) {
     throw new AppError(
       409,
-      'Ja existe uma categoria com esse nome para este tipo.',
+      'Já existe uma categoria com esse nome para este tipo.',
       'CATEGORY_ALREADY_EXISTS',
     );
   }
@@ -73,7 +73,7 @@ export async function updateCategory(userId: string, categoryId: string, data: U
   const existingCategory = await findCategoryById(categoryId);
 
   if (!existingCategory) {
-    throw new AppError(404, 'Categoria nao encontrada.', 'CATEGORY_NOT_FOUND');
+    throw new AppError(404, 'Categoria não encontrada.', 'CATEGORY_NOT_FOUND');
   }
 
   ensureCategoryOwnership(userId, existingCategory.userId);
@@ -88,7 +88,7 @@ export async function updateCategory(userId: string, categoryId: string, data: U
   }));
 
   if (!updatedCategory) {
-    throw new AppError(404, 'Categoria nao encontrada.', 'CATEGORY_NOT_FOUND');
+    throw new AppError(404, 'Categoria não encontrada.', 'CATEGORY_NOT_FOUND');
   }
 
   return sanitizeCategory(updatedCategory);
@@ -98,7 +98,7 @@ export async function deleteCategory(userId: string, categoryId: string) {
   const existingCategory = await findCategoryById(categoryId);
 
   if (!existingCategory) {
-    throw new AppError(404, 'Categoria nao encontrada.', 'CATEGORY_NOT_FOUND');
+    throw new AppError(404, 'Categoria não encontrada.', 'CATEGORY_NOT_FOUND');
   }
 
   ensureCategoryOwnership(userId, existingCategory.userId);
@@ -111,7 +111,7 @@ export async function deleteCategory(userId: string, categoryId: string) {
   if (hasLinkedTransactions) {
     throw new AppError(
       409,
-      'Nao e possivel remover categoria vinculada a lancamentos.',
+      'Não é possível remover categoria vinculada a lançamentos.',
       'CATEGORY_IN_USE',
     );
   }
@@ -119,7 +119,7 @@ export async function deleteCategory(userId: string, categoryId: string) {
   const removed = await deleteStoredCategory(categoryId);
 
   if (!removed) {
-    throw new AppError(404, 'Categoria nao encontrada.', 'CATEGORY_NOT_FOUND');
+    throw new AppError(404, 'Categoria não encontrada.', 'CATEGORY_NOT_FOUND');
   }
 
   return sanitizeCategory(existingCategory);

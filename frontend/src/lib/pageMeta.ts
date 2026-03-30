@@ -15,7 +15,7 @@ export const routeSubtitles: Record<string, string> = {
   '/app/overview':
     'Indicadores do mês e movimentação recente.',
   '/app/accounts':
-    'Contas e saldos ligados ao backend FinControl.',
+    'Contas e saldos conectados ao backend FinControl.',
   '/app/categories':
     'Receitas e despesas classificadas para lançamentos e relatórios.',
   '/app/transactions':
@@ -29,5 +29,5 @@ export const routeSubtitles: Record<string, string> = {
 };
 
 export function getPageSubtitle(pathname: string): string {
-  return routeSubtitles[pathname] ?? 'Gerencie os dados ligados ao backend FinControl.';
+  return routeSubtitles[pathname] ?? 'Gerencie os dados conectados ao backend FinControl.';
 }

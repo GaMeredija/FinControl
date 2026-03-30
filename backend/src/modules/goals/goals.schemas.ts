@@ -14,7 +14,7 @@ const amountSchema = z.preprocess((value) => {
 }, z.number().positive('Informe um valor alvo maior que zero.'));
 
 export const createGoalSchema = z.object({
-  title: z.string().trim().min(2, 'Informe um titulo valido.').max(100),
+  title: z.string().trim().min(2, 'Informe um título válido.').max(100),
   mode: z.enum(['saving', 'limit']),
   targetAmount: amountSchema,
 });

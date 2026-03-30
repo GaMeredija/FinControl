@@ -23,7 +23,7 @@ export async function listTransactionsController(req: AuthenticatedRequest, res:
 
   return res.status(200).json({
     data: transactions,
-    message: 'Lancamentos carregados com sucesso.',
+    message: 'Lançamentos carregados com sucesso.',
   });
 }
 
@@ -33,7 +33,7 @@ export async function createTransactionController(req: AuthenticatedRequest, res
 
   return res.status(201).json({
     data: transaction,
-    message: 'Lancamento criado com sucesso.',
+    message: 'Lançamento criado com sucesso.',
   });
 }
 
@@ -43,7 +43,7 @@ export async function updateTransactionController(req: AuthenticatedRequest, res
 
   return res.status(200).json({
     data: transaction,
-    message: 'Lancamento atualizado com sucesso.',
+    message: 'Lançamento atualizado com sucesso.',
   });
 }
 
@@ -52,6 +52,6 @@ export async function deleteTransactionController(req: AuthenticatedRequest, res
 
   return res.status(200).json({
     data: transaction,
-    message: 'Lancamento removido com sucesso.',
+    message: 'Lançamento removido com sucesso.',
   });
 }

@@ -79,7 +79,7 @@ export function RegisterPage() {
           />
         </div>
         <button type="submit" className="fc-btn fc-btn--primary" disabled={busy} style={{ width: '100%' }}>
-          {busy ? 'Criando…' : 'Criar conta'}
+          {busy ? 'Criando...' : 'Criar conta'}
         </button>
       </form>
 

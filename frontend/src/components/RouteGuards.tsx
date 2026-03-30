@@ -8,7 +8,7 @@ export function AppBootstrap({ children }: { children: React.ReactNode }) {
   if (!sessionReady) {
     return (
       <div className="fc-app-loading" role="status" aria-live="polite">
-        <span className="fc-sr-only">A carregar a aplicação</span>
+        <span className="fc-sr-only">Carregando a aplicação</span>
         <div className="fc-spinner" aria-hidden />
       </div>
     );
@@ -27,7 +27,7 @@ export function RequireAuth() {
   return <Outlet />;
 }
 
-/** Visitante: redireciona se ja autenticado (usa children em rotas planas). */
+/** Visitante: redireciona se já estiver autenticado (usa children em rotas planas). */
 export function GuestOnly({ children }: { children: ReactNode }) {
   const { user } = useApp();
 

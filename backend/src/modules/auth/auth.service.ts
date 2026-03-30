@@ -30,7 +30,7 @@ export async function register(data: RegisterInput) {
   const existingUser = await findUserByEmail(data.email);
 
   if (existingUser) {
-    throw new AppError(409, 'Este email ja esta em uso.', 'EMAIL_ALREADY_IN_USE');
+    throw new AppError(409, 'Este email já está em uso.', 'EMAIL_ALREADY_IN_USE');
   }
 
   const passwordHash = await hash(data.password, 10);
@@ -53,13 +53,13 @@ export async function login(data: LoginInput) {
   const user = await findUserByEmail(data.email);
 
   if (!user) {
-    throw new AppError(401, 'Email ou senha invalidos.', 'INVALID_CREDENTIALS');
+    throw new AppError(401, 'Email ou senha inválidos.', 'INVALID_CREDENTIALS');
   }
 
   const isPasswordValid = await compare(data.password, user.passwordHash);
 
   if (!isPasswordValid) {
-    throw new AppError(401, 'Email ou senha invalidos.', 'INVALID_CREDENTIALS');
+    throw new AppError(401, 'Email ou senha inválidos.', 'INVALID_CREDENTIALS');
   }
 
   const token = signAccessToken(user.id, user.email);
@@ -74,7 +74,7 @@ export async function getProfile(userId: string) {
   const user = await findUserById(userId);
 
   if (!user) {
-    throw new AppError(404, 'Usuario nao encontrado.', 'USER_NOT_FOUND');
+    throw new AppError(404, 'Usuário não encontrado.', 'USER_NOT_FOUND');
   }
 
   return sanitizeUser(user);
@@ -84,7 +84,7 @@ export async function updateProfile(userId: string, data: UpdateProfileInput) {
   const user = await findUserById(userId);
 
   if (!user) {
-    throw new AppError(404, 'Usuario nao encontrado.', 'USER_NOT_FOUND');
+    throw new AppError(404, 'Usuário não encontrado.', 'USER_NOT_FOUND');
   }
 
   const normalizedNewPassword = data.newPassword?.trim() || undefined;
@@ -97,7 +97,7 @@ export async function updateProfile(userId: string, data: UpdateProfileInput) {
       && await compare(normalizedCurrentPassword as string, user.passwordHash);
 
     if (!isCurrentPasswordValid) {
-      throw new AppError(401, 'Senha atual invalida.', 'INVALID_CURRENT_PASSWORD');
+      throw new AppError(401, 'Senha atual inválida.', 'INVALID_CURRENT_PASSWORD');
     }
   }
 
@@ -105,7 +105,7 @@ export async function updateProfile(userId: string, data: UpdateProfileInput) {
     const existingUser = await findUserByEmail(data.email);
 
     if (existingUser && existingUser.id !== user.id) {
-      throw new AppError(409, 'Este email ja esta em uso.', 'EMAIL_ALREADY_IN_USE');
+      throw new AppError(409, 'Este email já está em uso.', 'EMAIL_ALREADY_IN_USE');
     }
   }
 
@@ -116,7 +116,7 @@ export async function updateProfile(userId: string, data: UpdateProfileInput) {
   });
 
   if (!updatedUser) {
-    throw new AppError(404, 'Usuario nao encontrado.', 'USER_NOT_FOUND');
+    throw new AppError(404, 'Usuário não encontrado.', 'USER_NOT_FOUND');
   }
 
   return {

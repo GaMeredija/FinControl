@@ -39,7 +39,7 @@ export function AppLayout() {
         </div>
 
         <div className="fc-sidebar__user">
-          <strong>{user?.name ?? 'Utilizador'}</strong>
+          <strong>{user?.name ?? 'Usuário'}</strong>
           <span>{user?.email}</span>
         </div>
 
@@ -57,7 +57,7 @@ export function AppLayout() {
               apiStatus === 'online' ? 'ok' : apiStatus === 'offline' ? 'off' : 'unk'
             }`}
           >
-            API {apiStatus === 'online' ? 'online' : apiStatus === 'offline' ? 'offline' : '…'}
+            API {apiStatus === 'online' ? 'online' : apiStatus === 'offline' ? 'offline' : '...'}
           </span>
           <button
             type="button"
@@ -81,7 +81,7 @@ export function AppLayout() {
               className="fc-menu-btn"
               aria-expanded={menuOpen}
               aria-controls="app-sidebar"
-              onClick={() => setMenuOpen((o) => !o)}
+              onClick={() => setMenuOpen((open) => !open)}
             >
               <span className="fc-sr-only">Abrir menu</span>
               <span aria-hidden>☰</span>

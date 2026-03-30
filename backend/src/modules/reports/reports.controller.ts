@@ -8,6 +8,6 @@ export async function getReportSummaryController(req: AuthenticatedRequest, res:
 
   return res.status(200).json({
     data: report,
-    message: 'Relatorios carregados com sucesso.',
+    message: 'Relatórios carregados com sucesso.',
   });
 }

@@ -26,7 +26,7 @@ export function LoginPage() {
     setError(null);
     try {
       await login(email, password);
-      push('Sessao iniciada.', 'success');
+      push('Sessão iniciada.', 'success');
       navigate('/app/overview', { replace: true });
     } catch (err) {
       const msg = getErrorMessage(err);
@@ -45,7 +45,7 @@ export function LoginPage() {
 
       {isDemoMode ? (
         <p className="fc-auth__demo">
-          Modo demonstracao ativo. Use <strong>demo@fincontrol.app</strong> e <strong>123456</strong>.
+          Modo demonstração ativo. Use <strong>demo@fincontrol.app</strong> e <strong>123456</strong>.
         </p>
       ) : null}
 

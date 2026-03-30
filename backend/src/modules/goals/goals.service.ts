@@ -30,7 +30,7 @@ function sanitizeGoal(goal: {
 
 function ensureGoalOwnership(userId: string, goalUserId: string) {
   if (userId !== goalUserId) {
-    throw new AppError(404, 'Meta nao encontrada.', 'GOAL_NOT_FOUND');
+    throw new AppError(404, 'Meta não encontrada.', 'GOAL_NOT_FOUND');
   }
 }
 
@@ -57,7 +57,7 @@ export async function updateGoal(userId: string, goalId: string, data: UpdateGoa
   const existingGoal = await findGoalById(goalId);
 
   if (!existingGoal) {
-    throw new AppError(404, 'Meta nao encontrada.', 'GOAL_NOT_FOUND');
+    throw new AppError(404, 'Meta não encontrada.', 'GOAL_NOT_FOUND');
   }
 
   ensureGoalOwnership(userId, existingGoal.userId);
@@ -71,7 +71,7 @@ export async function updateGoal(userId: string, goalId: string, data: UpdateGoa
   }));
 
   if (!updatedGoal) {
-    throw new AppError(404, 'Meta nao encontrada.', 'GOAL_NOT_FOUND');
+    throw new AppError(404, 'Meta não encontrada.', 'GOAL_NOT_FOUND');
   }
 
   return sanitizeGoal(updatedGoal);
@@ -81,7 +81,7 @@ export async function deleteGoal(userId: string, goalId: string) {
   const existingGoal = await findGoalById(goalId);
 
   if (!existingGoal) {
-    throw new AppError(404, 'Meta nao encontrada.', 'GOAL_NOT_FOUND');
+    throw new AppError(404, 'Meta não encontrada.', 'GOAL_NOT_FOUND');
   }
 
   ensureGoalOwnership(userId, existingGoal.userId);
@@ -89,7 +89,7 @@ export async function deleteGoal(userId: string, goalId: string) {
   const removed = await deleteStoredGoal(goalId);
 
   if (!removed) {
-    throw new AppError(404, 'Meta nao encontrada.', 'GOAL_NOT_FOUND');
+    throw new AppError(404, 'Meta não encontrada.', 'GOAL_NOT_FOUND');
   }
 
   return sanitizeGoal(existingGoal);

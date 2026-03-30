@@ -12,7 +12,7 @@ export function MonthlyBarsChart({
   if (!items.length) {
     return (
       <div className="fc-empty" style={{ minHeight: 280 }}>
-        Sem historico suficiente para o grafico.
+        Sem histórico suficiente para o gráfico.
       </div>
     );
   }
@@ -39,7 +39,12 @@ export function MonthlyBarsChart({
 
   return (
     <div className="fc-trend-chart">
-      <svg viewBox={`0 0 ${width} ${height}`} className="fc-trend-chart__svg" aria-label="Historico mensal de receitas e despesas" role="img">
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className="fc-trend-chart__svg"
+        aria-label="Histórico mensal de receitas e despesas"
+        role="img"
+      >
         {gridValues.map((ratio) => {
           const y = chartBottom - ratio * chartHeight;
           return (

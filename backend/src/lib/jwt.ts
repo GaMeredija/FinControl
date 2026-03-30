@@ -18,13 +18,13 @@ export function verifyAccessToken(token: string) {
   const decoded = jwt.verify(token, env.JWT_SECRET);
 
   if (typeof decoded === 'string') {
-    throw new AppError(401, 'Token invalido.', 'INVALID_TOKEN');
+    throw new AppError(401, 'Token inválido.', 'INVALID_TOKEN');
   }
 
   const payload = decoded as TokenPayload;
 
   if (!payload.sub || typeof payload.sub !== 'string') {
-    throw new AppError(401, 'Token invalido.', 'INVALID_TOKEN');
+    throw new AppError(401, 'Token inválido.', 'INVALID_TOKEN');
   }
 
   return {
@@ -32,4 +32,3 @@ export function verifyAccessToken(token: string) {
     email: payload.email,
   };
 }
-

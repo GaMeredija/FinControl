@@ -52,7 +52,7 @@ export type AppContextValue = {
   includeInactiveAccounts: boolean;
   setIncludeInactiveAccounts: (v: boolean) => void;
   busy: boolean;
-  /** true apos primeira tentativa de restaurar sessao (evita flash login/app) */
+  /** true após a primeira tentativa de restaurar a sessão (evita flash login/app) */
   sessionReady: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
@@ -77,8 +77,8 @@ export type AppContextValue = {
 const AppContext = createContext<AppContextValue | null>(null);
 
 function readStoredTheme(): Theme {
-  const v = safeGetItem(storageKeys.theme);
-  return v === 'dark' ? 'dark' : 'light';
+  const value = safeGetItem(storageKeys.theme);
+  return value === 'dark' ? 'dark' : 'light';
 }
 
 function readStoredApiUrl(): string {
@@ -122,10 +122,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [sessionReady, setSessionReady] = useState(false);
   const isDemoMode = isDemoApiUrl(apiUrl);
 
-  const setTheme = useCallback((t: Theme) => {
-    setThemeState(t);
-    document.documentElement.dataset.theme = t;
-    safeSetItem(storageKeys.theme, t);
+  const setTheme = useCallback((nextTheme: Theme) => {
+    setThemeState(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+    safeSetItem(storageKeys.theme, nextTheme);
   }, []);
 
   const setApiUrl = useCallback((url: string) => {
@@ -144,11 +144,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setReports(defaultReports);
   }, []);
 
-  const persistToken = useCallback((next: string | null) => {
-    tokenRef.current = next;
-    setToken(next);
-    if (next) {
-      safeSetItem(storageKeys.token, next);
+  const persistToken = useCallback((nextToken: string | null) => {
+    tokenRef.current = nextToken;
+    setToken(nextToken);
+    if (nextToken) {
+      safeSetItem(storageKeys.token, nextToken);
     } else {
       safeRemoveItem(storageKeys.token);
     }
@@ -185,7 +185,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const fetchProfile = useCallback(async (silent = false) => {
+  const fetchProfile = useCallback(async (_silent = false) => {
     const auth = tokenRef.current;
     if (!auth) {
       return false;
@@ -198,9 +198,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setUser(res.data);
       return true;
     } catch {
-      if (!silent) {
-        /* handled by caller */
-      }
       return false;
     }
   }, []);
@@ -212,10 +209,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setAccounts([]);
         return false;
       }
-      const inc = opts?.includeInactive ?? includeInactiveAccounts;
-      const q = inc ? '?includeInactive=true' : '';
+      const includeInactive = opts?.includeInactive ?? includeInactiveAccounts;
+      const query = includeInactive ? '?includeInactive=true' : '';
       try {
-        const res = await apiFetch<ApiEnvelope<Account[]>>(apiUrlRef.current, `/accounts${q}`, {
+        const res = await apiFetch<ApiEnvelope<Account[]>>(apiUrlRef.current, `/accounts${query}`, {
           method: 'GET',
           token: auth,
         });
@@ -402,11 +399,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 
   const restoreSession = useCallback(async () => {
-    const t = readStoredToken();
+    const storedToken = readStoredToken();
     const url = readStoredApiUrl();
     apiUrlRef.current = url;
     setApiUrlState(url);
-    if (!t) {
+    if (!storedToken) {
       persistToken(null);
       clearWorkspace();
       await apiFetch<HealthPayload>(url, '/health', { method: 'GET' })
@@ -416,7 +413,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         .catch(() => setApiStatus('offline'));
       return;
     }
-    persistToken(t);
+    persistToken(storedToken);
     setBusy(true);
     try {
       await checkHealth();
@@ -440,8 +437,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     void (async () => {
       try {
         await restoreSession();
-      } catch (e) {
-        console.error('FinControl: falha ao restaurar sessão', e);
+      } catch (error) {
+        console.error('FinControl: falha ao restaurar sessão', error);
       } finally {
         if (!cancelled) {
           setSessionReady(true);
@@ -451,7 +448,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- bootstrap uma vez
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- bootstrap executado uma vez
   }, []);
 
   const value = useMemo<AppContextValue>(
@@ -526,9 +523,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
 }
 
 export function useApp() {
-  const ctx = useContext(AppContext);
-  if (!ctx) {
+  const context = useContext(AppContext);
+  if (!context) {
     throw new Error('useApp deve ser usado dentro de AppProvider');
   }
-  return ctx;
+  return context;
 }

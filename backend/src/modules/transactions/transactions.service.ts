@@ -44,7 +44,7 @@ function sanitizeTransaction(transaction: {
 
 function ensureTransactionOwnership(userId: string, transactionUserId: string) {
   if (userId !== transactionUserId) {
-    throw new AppError(404, 'Lancamento nao encontrado.', 'TRANSACTION_NOT_FOUND');
+    throw new AppError(404, 'Lançamento não encontrado.', 'TRANSACTION_NOT_FOUND');
   }
 }
 
@@ -52,23 +52,23 @@ async function ensureLinkedResources(userId: string, accountId: string, category
   const account = await findAccountById(accountId);
 
   if (!account || account.userId !== userId) {
-    throw new AppError(404, 'Conta nao encontrada.', 'ACCOUNT_NOT_FOUND');
+    throw new AppError(404, 'Conta não encontrada.', 'ACCOUNT_NOT_FOUND');
   }
 
   if (!account.isActive) {
-    throw new AppError(409, 'Nao e possivel usar uma conta inativa.', 'ACCOUNT_INACTIVE');
+    throw new AppError(409, 'Não é possível usar uma conta inativa.', 'ACCOUNT_INACTIVE');
   }
 
   const category = await findCategoryById(categoryId);
 
   if (!category || category.userId !== userId) {
-    throw new AppError(404, 'Categoria nao encontrada.', 'CATEGORY_NOT_FOUND');
+    throw new AppError(404, 'Categoria não encontrada.', 'CATEGORY_NOT_FOUND');
   }
 
   if (category.kind !== kind) {
     throw new AppError(
       409,
-      'O tipo da categoria precisa combinar com o tipo do lancamento.',
+      'O tipo da categoria precisa combinar com o tipo do lançamento.',
       'CATEGORY_KIND_MISMATCH',
     );
   }
@@ -114,7 +114,7 @@ export async function updateTransaction(
   const existingTransaction = await findTransactionById(transactionId);
 
   if (!existingTransaction) {
-    throw new AppError(404, 'Lancamento nao encontrado.', 'TRANSACTION_NOT_FOUND');
+    throw new AppError(404, 'Lançamento não encontrado.', 'TRANSACTION_NOT_FOUND');
   }
 
   ensureTransactionOwnership(userId, existingTransaction.userId);
@@ -133,7 +133,7 @@ export async function updateTransaction(
   }));
 
   if (!updatedTransaction) {
-    throw new AppError(404, 'Lancamento nao encontrado.', 'TRANSACTION_NOT_FOUND');
+    throw new AppError(404, 'Lançamento não encontrado.', 'TRANSACTION_NOT_FOUND');
   }
 
   return sanitizeTransaction(updatedTransaction);
@@ -143,7 +143,7 @@ export async function deleteTransaction(userId: string, transactionId: string) {
   const existingTransaction = await findTransactionById(transactionId);
 
   if (!existingTransaction) {
-    throw new AppError(404, 'Lancamento nao encontrado.', 'TRANSACTION_NOT_FOUND');
+    throw new AppError(404, 'Lançamento não encontrado.', 'TRANSACTION_NOT_FOUND');
   }
 
   ensureTransactionOwnership(userId, existingTransaction.userId);
@@ -151,7 +151,7 @@ export async function deleteTransaction(userId: string, transactionId: string) {
   const removed = await deleteStoredTransaction(transactionId);
 
   if (!removed) {
-    throw new AppError(404, 'Lancamento nao encontrado.', 'TRANSACTION_NOT_FOUND');
+    throw new AppError(404, 'Lançamento não encontrado.', 'TRANSACTION_NOT_FOUND');
   }
 
   return sanitizeTransaction(existingTransaction);

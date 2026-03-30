@@ -13,11 +13,11 @@ export function OverviewPage() {
   const { user, accounts, categories, transactions, reports, goals } = useApp();
 
   const ordered = getOrderedAccounts(accounts, transactions);
-  const activeAccounts = ordered.filter((a) => a.isActive);
+  const activeAccounts = ordered.filter((account) => account.isActive);
   const reportSummary = reports.summary;
   const balance =
     reportSummary?.totalBalance ??
-    activeAccounts.reduce((s, a) => s + a.currentBalance, 0);
+    activeAccounts.reduce((sum, account) => sum + account.currentBalance, 0);
   const monthMetrics = reportSummary
     ? {
         income: reportSummary.income,
@@ -30,27 +30,27 @@ export function OverviewPage() {
 
   const recent = reports.recentTransactions.length
     ? reports.recentTransactions
-    : getRecentTransactions(transactions).map((t) => ({
-        id: t.id,
-        description: t.description,
-        kind: t.kind,
-        amount: Number(t.amount),
-        createdAt: t.createdAt,
-        categoryName: categories.find((c) => c.id === t.categoryId)?.name,
+    : getRecentTransactions(transactions).map((transaction) => ({
+        id: transaction.id,
+        description: transaction.description,
+        kind: transaction.kind,
+        amount: Number(transaction.amount),
+        createdAt: transaction.createdAt,
+        categoryName: categories.find((category) => category.id === transaction.categoryId)?.name,
       }));
 
   const topCats = reports.categoryExpenses.length
-    ? reports.categoryExpenses.map((c) => ({
-        label: c.name,
-        value: c.value,
-        color: c.color,
-        aside: formatCurrency(c.value),
+    ? reports.categoryExpenses.map((category) => ({
+        label: category.name,
+        value: category.value,
+        color: category.color,
+        aside: formatCurrency(category.value),
       }))
-    : getTopCategoryExpenses(transactions, categories).map((c) => ({
-        label: c.name,
-        value: c.value,
-        color: c.color,
-        aside: formatCurrency(c.value),
+    : getTopCategoryExpenses(transactions, categories).map((category) => ({
+        label: category.name,
+        value: category.value,
+        color: category.color,
+        aside: formatCurrency(category.value),
       }));
 
   return (
@@ -99,7 +99,7 @@ export function OverviewPage() {
           Bem-vindo de volta{user?.name ? `, ${user.name}` : ''}.
         </p>
         <p style={{ margin: '8px 0 0', color: 'var(--fc-muted)' }}>
-          Use o menu para gerir contas, categorias e lançamentos.
+          Use o menu para gerenciar contas, categorias e lançamentos.
         </p>
       </div>
 
@@ -120,17 +120,17 @@ export function OverviewPage() {
           {!recent.length ? (
             <div className="fc-empty">Nenhum lançamento ainda.</div>
           ) : (
-            recent.map((t) => (
-              <article key={t.id} className="fc-activity">
+            recent.map((transaction) => (
+              <article key={transaction.id} className="fc-activity">
                 <div>
-                  <strong>{t.description}</strong>
+                  <strong>{transaction.description}</strong>
                   <p style={{ margin: '4px 0 0', fontSize: '0.88rem', color: 'var(--fc-muted)' }}>
-                    {t.categoryName ?? 'Sem categoria'} — {formatDateTime(t.createdAt)}
+                    {transaction.categoryName ?? 'Sem categoria'} — {formatDateTime(transaction.createdAt)}
                   </p>
                 </div>
-                <span className={t.kind === 'income' ? 'fc-tag-pos' : 'fc-tag-neg'}>
-                  {t.kind === 'income' ? '+' : '-'}
-                  {formatCurrency(t.amount)}
+                <span className={transaction.kind === 'income' ? 'fc-tag-pos' : 'fc-tag-neg'}>
+                  {transaction.kind === 'income' ? '+' : '-'}
+                  {formatCurrency(transaction.amount)}
                 </span>
               </article>
             ))

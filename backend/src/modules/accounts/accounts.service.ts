@@ -14,9 +14,9 @@ import {
 
 const accountTypeLabels: Record<string, string> = {
   checking: 'Conta corrente',
-  savings: 'Poupanca',
+  savings: 'Poupança',
   cash: 'Dinheiro',
-  credit_card: 'Cartao de credito',
+  credit_card: 'Cartão de crédito',
   investment: 'Investimento',
 };
 
@@ -46,7 +46,7 @@ function sanitizeAccount(account: {
 
 function ensureAccountOwnership(userId: string, accountUserId: string) {
   if (userId !== accountUserId) {
-    throw new AppError(404, 'Conta nao encontrada.', 'ACCOUNT_NOT_FOUND');
+    throw new AppError(404, 'Conta não encontrada.', 'ACCOUNT_NOT_FOUND');
   }
 }
 
@@ -94,7 +94,7 @@ export async function updateAccount(userId: string, accountId: string, data: Upd
   const existingAccount = await findAccountById(accountId);
 
   if (!existingAccount) {
-    throw new AppError(404, 'Conta nao encontrada.', 'ACCOUNT_NOT_FOUND');
+    throw new AppError(404, 'Conta não encontrada.', 'ACCOUNT_NOT_FOUND');
   }
 
   ensureAccountOwnership(userId, existingAccount.userId);
@@ -108,7 +108,7 @@ export async function updateAccount(userId: string, accountId: string, data: Upd
   }));
 
   if (!updatedAccount) {
-    throw new AppError(404, 'Conta nao encontrada.', 'ACCOUNT_NOT_FOUND');
+    throw new AppError(404, 'Conta não encontrada.', 'ACCOUNT_NOT_FOUND');
   }
 
   return sanitizeAccount(updatedAccount);
@@ -118,7 +118,7 @@ export async function inactivateAccount(userId: string, accountId: string) {
   const existingAccount = await findAccountById(accountId);
 
   if (!existingAccount) {
-    throw new AppError(404, 'Conta nao encontrada.', 'ACCOUNT_NOT_FOUND');
+    throw new AppError(404, 'Conta não encontrada.', 'ACCOUNT_NOT_FOUND');
   }
 
   ensureAccountOwnership(userId, existingAccount.userId);
@@ -134,7 +134,7 @@ export async function inactivateAccount(userId: string, accountId: string) {
   }));
 
   if (!updatedAccount) {
-    throw new AppError(404, 'Conta nao encontrada.', 'ACCOUNT_NOT_FOUND');
+    throw new AppError(404, 'Conta não encontrada.', 'ACCOUNT_NOT_FOUND');
   }
 
   return sanitizeAccount(updatedAccount);

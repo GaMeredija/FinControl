@@ -110,7 +110,7 @@ function buildSeedDatabase(): DemoDatabase {
       {
         id: salaryCategoryId,
         userId,
-        name: 'Salario',
+        name: 'Salário',
         kind: 'income',
         color: '#0d8f6e',
         isDefault: true,
@@ -121,7 +121,7 @@ function buildSeedDatabase(): DemoDatabase {
       {
         id: foodCategoryId,
         userId,
-        name: 'Alimentacao',
+        name: 'Alimentação',
         kind: 'expense',
         color: '#d97706',
         isDefault: true,
@@ -158,11 +158,11 @@ function buildSeedDatabase(): DemoDatabase {
         userId,
         accountId,
         categoryId: salaryCategoryId,
-        description: 'Salario mensal',
+        description: 'Salário mensal',
         kind: 'income',
         amount: 4200,
         transactionDate: currentMonth,
-        notes: 'Exemplo para demonstracao',
+        notes: 'Exemplo para demonstração',
         createdAt: timestamp,
         updatedAt: timestamp,
       },
@@ -175,7 +175,7 @@ function buildSeedDatabase(): DemoDatabase {
         kind: 'expense',
         amount: 380,
         transactionDate: currentMonth,
-        notes: 'Compra do mes',
+        notes: 'Compra do mês',
         createdAt: timestamp,
         updatedAt: timestamp,
       },
@@ -184,7 +184,7 @@ function buildSeedDatabase(): DemoDatabase {
         userId,
         accountId,
         categoryId: transportCategoryId,
-        description: 'Combustivel',
+        description: 'Combustível',
         kind: 'expense',
         amount: 220,
         transactionDate: currentMonth,
@@ -210,7 +210,7 @@ function buildSeedDatabase(): DemoDatabase {
       {
         id: createId(),
         userId,
-        title: 'Reserva de emergencia',
+        title: 'Reserva de emergência',
         mode: 'saving',
         targetAmount: 1000,
         createdAt: timestamp,
@@ -255,12 +255,12 @@ function writeDatabase(database: DemoDatabase) {
 function getUserFromToken(database: DemoDatabase, token?: string | null) {
   const userId = readTokenUserId(token);
   if (!userId) {
-    throw new Error('Sessao invalida.');
+    throw new Error('Sessão inválida.');
   }
 
   const user = database.users.find((item) => item.id === userId);
   if (!user) {
-    throw new Error('Sessao invalida.');
+    throw new Error('Sessão inválida.');
   }
 
   return user;
@@ -298,8 +298,8 @@ function seedWorkspaceForUser(database: DemoDatabase, userId: string) {
   });
 
   const defaults: Array<Pick<Category, 'name' | 'kind' | 'color'>> = [
-    { name: 'Salario', kind: 'income', color: '#0d8f6e' },
-    { name: 'Alimentacao', kind: 'expense', color: '#d97706' },
+    { name: 'Salário', kind: 'income', color: '#0d8f6e' },
+    { name: 'Alimentação', kind: 'expense', color: '#d97706' },
     { name: 'Transporte', kind: 'expense', color: '#2563eb' },
     { name: 'Lazer', kind: 'expense', color: '#9333ea' },
   ];
@@ -381,7 +381,7 @@ function isGoalMode(value: unknown): value is Goal['mode'] {
 function parseAmount(value: unknown) {
   const amount = Number(value);
   if (!Number.isFinite(amount)) {
-    throw new Error('Informe um valor valido.');
+    throw new Error('Informe um valor válido.');
   }
 
   return roundCurrency(amount);
@@ -436,7 +436,7 @@ export async function demoApiFetch<T>(
     const password = String(payload.password ?? '');
 
     if (database.users.some((item) => normalizeEmail(item.email) === email)) {
-      throw new Error('Este email ja esta em uso.');
+      throw new Error('Este email já está em uso.');
     }
 
     const timestamp = nowIso();
@@ -466,7 +466,7 @@ export async function demoApiFetch<T>(
     const user = database.users.find((item) => normalizeEmail(item.email) === email);
 
     if (!user || user.password !== password) {
-      throw new Error('Email ou senha invalidos.');
+      throw new Error('Email ou senha inválidos.');
     }
 
     return success<AuthPayload>(
@@ -492,14 +492,14 @@ export async function demoApiFetch<T>(
     const passwordChanging = Boolean(newPassword);
 
     if ((emailChanging || passwordChanging) && currentPassword !== sessionUser.password) {
-      throw new Error('Senha atual invalida.');
+      throw new Error('Senha atual inválida.');
     }
 
     const duplicated = database.users.find(
       (item) => normalizeEmail(item.email) === email && item.id !== sessionUser.id,
     );
     if (duplicated) {
-      throw new Error('Este email ja esta em uso.');
+      throw new Error('Este email já está em uso.');
     }
 
     sessionUser.name = name;
@@ -524,9 +524,9 @@ export async function demoApiFetch<T>(
     const includeInactive = url.searchParams.get('includeInactive') === 'true';
     const typeLabels: Record<string, string> = {
       checking: 'Conta corrente',
-      savings: 'Poupanca',
+      savings: 'Poupança',
       cash: 'Dinheiro',
-      credit_card: 'Cartao de credito',
+      credit_card: 'Cartão de crédito',
       investment: 'Investimento',
     };
 
@@ -550,7 +550,7 @@ export async function demoApiFetch<T>(
   if (method === 'POST' && url.pathname === '/accounts') {
     const payload = (init.jsonBody ?? {}) as Record<string, unknown>;
     if (!isAccountType(payload.type)) {
-      throw new Error('Tipo de conta invalido.');
+      throw new Error('Tipo de conta inválido.');
     }
 
     const timestamp = nowIso();
@@ -575,10 +575,10 @@ export async function demoApiFetch<T>(
     const payload = (init.jsonBody ?? {}) as Record<string, unknown>;
     const account = database.accounts.find((item) => item.id === accountId && item.userId === sessionUser.id);
     if (!account) {
-      throw new Error('Conta nao encontrada.');
+      throw new Error('Conta não encontrada.');
     }
     if (!isAccountType(payload.type)) {
-      throw new Error('Tipo de conta invalido.');
+      throw new Error('Tipo de conta inválido.');
     }
 
     account.name = String(payload.name ?? '').trim();
@@ -593,7 +593,7 @@ export async function demoApiFetch<T>(
     const accountId = url.pathname.split('/')[2];
     const account = database.accounts.find((item) => item.id === accountId && item.userId === sessionUser.id);
     if (!account) {
-      throw new Error('Conta nao encontrada.');
+      throw new Error('Conta não encontrada.');
     }
 
     account.isActive = false;
@@ -613,10 +613,10 @@ export async function demoApiFetch<T>(
     const kind = String(payload.kind ?? '');
     const color = String(payload.color ?? '#147a68');
     if (!isTransactionKind(kind)) {
-      throw new Error('Tipo de categoria invalido.');
+      throw new Error('Tipo de categoria inválido.');
     }
     if (scoped.categories.some((item) => item.kind === kind && item.name.toLowerCase() === name.toLowerCase())) {
-      throw new Error('Ja existe uma categoria com esse nome para este tipo.');
+      throw new Error('Já existe uma categoria com esse nome para este tipo.');
     }
 
     const timestamp = nowIso();
@@ -642,19 +642,19 @@ export async function demoApiFetch<T>(
     const payload = (init.jsonBody ?? {}) as Record<string, unknown>;
     const category = database.categories.find((item) => item.id === categoryId && item.userId === sessionUser.id);
     if (!category) {
-      throw new Error('Categoria nao encontrada.');
+      throw new Error('Categoria não encontrada.');
     }
     const name = String(payload.name ?? '').trim();
     const kind = String(payload.kind ?? '');
     if (!isTransactionKind(kind)) {
-      throw new Error('Tipo de categoria invalido.');
+      throw new Error('Tipo de categoria inválido.');
     }
     if (
       scoped.categories.some(
         (item) => item.id !== categoryId && item.kind === kind && item.name.toLowerCase() === name.toLowerCase(),
       )
     ) {
-      throw new Error('Ja existe uma categoria com esse nome para este tipo.');
+      throw new Error('Já existe uma categoria com esse nome para este tipo.');
     }
 
     category.name = name;
@@ -669,10 +669,10 @@ export async function demoApiFetch<T>(
     const categoryId = url.pathname.split('/')[2];
     const category = database.categories.find((item) => item.id === categoryId && item.userId === sessionUser.id);
     if (!category) {
-      throw new Error('Categoria nao encontrada.');
+      throw new Error('Categoria não encontrada.');
     }
     if (scoped.transactions.some((item) => item.categoryId === categoryId)) {
-      throw new Error('Nao e possivel remover categoria vinculada a lancamentos.');
+      throw new Error('Não é possível remover categoria vinculada a lançamentos.');
     }
 
     database.categories = database.categories.filter((item) => item.id !== categoryId);
@@ -690,7 +690,7 @@ export async function demoApiFetch<T>(
         }
         return right.createdAt.localeCompare(left.createdAt);
       });
-    return success(data, 'Lancamentos carregados com sucesso.') as T;
+    return success(data, 'Lançamentos carregados com sucesso.') as T;
   }
 
   if (method === 'POST' && url.pathname === '/transactions') {
@@ -699,23 +699,23 @@ export async function demoApiFetch<T>(
     const accountId = String(payload.accountId ?? '');
     const categoryId = String(payload.categoryId ?? '');
     if (!isTransactionKind(kind)) {
-      throw new Error('Tipo de lancamento invalido.');
+      throw new Error('Tipo de lançamento inválido.');
     }
 
     const account = scoped.accounts.find((item) => item.id === accountId);
     if (!account) {
-      throw new Error('Conta nao encontrada.');
+      throw new Error('Conta não encontrada.');
     }
     if (!account.isActive) {
-      throw new Error('Nao e possivel usar uma conta inativa.');
+      throw new Error('Não é possível usar uma conta inativa.');
     }
 
     const category = scoped.categories.find((item) => item.id === categoryId);
     if (!category) {
-      throw new Error('Categoria nao encontrada.');
+      throw new Error('Categoria não encontrada.');
     }
     if (category.kind !== kind) {
-      throw new Error('O tipo da categoria precisa combinar com o tipo do lancamento.');
+      throw new Error('O tipo da categoria precisa combinar com o tipo do lançamento.');
     }
 
     const timestamp = nowIso();
@@ -735,7 +735,7 @@ export async function demoApiFetch<T>(
 
     database.transactions.push(transaction);
     writeDatabase(database);
-    return success(transaction, 'Lancamento criado com sucesso.') as T;
+    return success(transaction, 'Lançamento criado com sucesso.') as T;
   }
 
   if (method === 'PUT' && url.pathname.startsWith('/transactions/')) {
@@ -743,30 +743,30 @@ export async function demoApiFetch<T>(
     const payload = (init.jsonBody ?? {}) as Record<string, unknown>;
     const transaction = database.transactions.find((item) => item.id === transactionId && item.userId === sessionUser.id);
     if (!transaction) {
-      throw new Error('Lancamento nao encontrado.');
+      throw new Error('Lançamento não encontrado.');
     }
 
     const kind = String(payload.kind ?? '');
     const accountId = String(payload.accountId ?? '');
     const categoryId = String(payload.categoryId ?? '');
     if (!isTransactionKind(kind)) {
-      throw new Error('Tipo de lancamento invalido.');
+      throw new Error('Tipo de lançamento inválido.');
     }
 
     const account = scoped.accounts.find((item) => item.id === accountId);
     if (!account) {
-      throw new Error('Conta nao encontrada.');
+      throw new Error('Conta não encontrada.');
     }
     if (!account.isActive) {
-      throw new Error('Nao e possivel usar uma conta inativa.');
+      throw new Error('Não é possível usar uma conta inativa.');
     }
 
     const category = scoped.categories.find((item) => item.id === categoryId);
     if (!category) {
-      throw new Error('Categoria nao encontrada.');
+      throw new Error('Categoria não encontrada.');
     }
     if (category.kind !== kind) {
-      throw new Error('O tipo da categoria precisa combinar com o tipo do lancamento.');
+      throw new Error('O tipo da categoria precisa combinar com o tipo do lançamento.');
     }
 
     transaction.accountId = accountId;
@@ -778,19 +778,19 @@ export async function demoApiFetch<T>(
     transaction.notes = String(payload.notes ?? '').trim() || null;
     transaction.updatedAt = nowIso();
     writeDatabase(database);
-    return success(transaction, 'Lancamento atualizado com sucesso.') as T;
+    return success(transaction, 'Lançamento atualizado com sucesso.') as T;
   }
 
   if (method === 'DELETE' && url.pathname.startsWith('/transactions/')) {
     const transactionId = url.pathname.split('/')[2];
     const transaction = database.transactions.find((item) => item.id === transactionId && item.userId === sessionUser.id);
     if (!transaction) {
-      throw new Error('Lancamento nao encontrado.');
+      throw new Error('Lançamento não encontrado.');
     }
 
     database.transactions = database.transactions.filter((item) => item.id !== transactionId);
     writeDatabase(database);
-    return success(transaction, 'Lancamento removido com sucesso.') as T;
+    return success(transaction, 'Lançamento removido com sucesso.') as T;
   }
 
   if (method === 'GET' && url.pathname === '/goals') {
@@ -802,7 +802,7 @@ export async function demoApiFetch<T>(
     const payload = (init.jsonBody ?? {}) as Record<string, unknown>;
     const mode = String(payload.mode ?? '');
     if (!isGoalMode(mode)) {
-      throw new Error('Modo de meta invalido.');
+      throw new Error('Modo de meta inválido.');
     }
     const timestamp = nowIso();
     const goal: Goal = {
@@ -825,11 +825,11 @@ export async function demoApiFetch<T>(
     const payload = (init.jsonBody ?? {}) as Record<string, unknown>;
     const goal = database.goals.find((item) => item.id === goalId && item.userId === sessionUser.id);
     if (!goal) {
-      throw new Error('Meta nao encontrada.');
+      throw new Error('Meta não encontrada.');
     }
     const mode = String(payload.mode ?? '');
     if (!isGoalMode(mode)) {
-      throw new Error('Modo de meta invalido.');
+      throw new Error('Modo de meta inválido.');
     }
 
     goal.title = String(payload.title ?? '').trim();
@@ -844,7 +844,7 @@ export async function demoApiFetch<T>(
     const goalId = url.pathname.split('/')[2];
     const goal = database.goals.find((item) => item.id === goalId && item.userId === sessionUser.id);
     if (!goal) {
-      throw new Error('Meta nao encontrada.');
+      throw new Error('Meta não encontrada.');
     }
 
     database.goals = database.goals.filter((item) => item.id !== goalId);
@@ -853,8 +853,8 @@ export async function demoApiFetch<T>(
   }
 
   if (method === 'GET' && url.pathname === '/reports/summary') {
-    return success(buildReportsPayload(database, sessionUser.id), 'Relatorio carregado com sucesso.') as T;
+    return success(buildReportsPayload(database, sessionUser.id), 'Relatório carregado com sucesso.') as T;
   }
 
-  throw new Error(`Rota demo nao implementada: ${method} ${url.pathname}`);
+  throw new Error(`Rota demo não implementada: ${method} ${url.pathname}`);
 }

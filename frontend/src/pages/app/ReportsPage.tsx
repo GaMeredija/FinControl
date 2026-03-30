@@ -86,7 +86,7 @@ export function ReportsPage() {
       push('PDF gerado com sucesso.', 'success');
     } catch (error) {
       console.error('FinControl: falha ao gerar PDF', error);
-      push('Nao foi possivel gerar o PDF.', 'error');
+      push('Não foi possível gerar o PDF.', 'error');
     } finally {
       setExporting(false);
     }
@@ -96,9 +96,9 @@ export function ReportsPage() {
     <div>
       <div className="fc-report-toolbar">
         <div>
-          <p className="fc-kicker" style={{ marginBottom: 8 }}>Relatorio executivo</p>
+          <p className="fc-kicker" style={{ marginBottom: 8 }}>Relatório executivo</p>
           <p className="fc-page-lead" style={{ margin: 0 }}>
-            Panorama mensal, distribuicao por categoria e historico recente prontos para exportacao.
+            Panorama mensal, distribuição por categoria e histórico recente prontos para exportação.
           </p>
         </div>
         <button
@@ -115,36 +115,36 @@ export function ReportsPage() {
         <header className="fc-report-sheet__header">
           <div>
             <p className="fc-kicker">FinControl</p>
-            <h2>Relatorio financeiro</h2>
+            <h2>Relatório financeiro</h2>
             <p>
               Emitido em {totals.generatedAt}
               {user?.name ? ` para ${user.name}` : ''}.
             </p>
           </div>
           <div className="fc-report-sheet__meta">
-            <span>Periodo principal</span>
-            <strong>Mes atual</strong>
-            <span>Historico complementar: ultimos 6 meses</span>
+            <span>Período principal</span>
+            <strong>Mês atual</strong>
+            <span>Histórico complementar: últimos 6 meses</span>
           </div>
         </header>
 
         <section className="fc-report-hero">
           <div className="fc-grid fc-grid--4">
             <article className="fc-stat fc-stat--accent">
-              <span>Patrimonio consolidado</span>
+              <span>Patrimônio consolidado</span>
               <strong>{formatCurrency(reportSummary?.totalBalance ?? 0)}</strong>
               <span>{reportSummary?.activeAccountsCount ?? 0} contas ativas</span>
             </article>
             <article className="fc-stat">
-              <span>Receitas do mes</span>
+              <span>Receitas do mês</span>
               <strong>{formatCurrency(monthMetrics.income)}</strong>
             </article>
             <article className="fc-stat">
-              <span>Despesas do mes</span>
+              <span>Despesas do mês</span>
               <strong>{formatCurrency(monthMetrics.expense)}</strong>
             </article>
             <article className="fc-stat">
-              <span>Saldo do mes</span>
+              <span>Saldo do mês</span>
               <strong>{formatCurrency(monthMetrics.net)}</strong>
               <span>{monthMetrics.net >= 0 ? 'Resultado positivo' : 'Resultado negativo'}</span>
             </article>
@@ -155,7 +155,7 @@ export function ReportsPage() {
           <section className="fc-card">
             <div className="fc-report-card__head">
               <div>
-                <p className="fc-kicker">Distribuicao</p>
+                <p className="fc-kicker">Distribuição</p>
                 <h3>Gastos por categoria</h3>
               </div>
               <span className="fc-report-note">
@@ -176,10 +176,10 @@ export function ReportsPage() {
           <section className="fc-card">
             <div className="fc-report-card__head">
               <div>
-                <p className="fc-kicker">Historico</p>
+                <p className="fc-kicker">Histórico</p>
                 <h3>Receitas x despesas</h3>
               </div>
-              <span className="fc-report-note">Ultimos 6 meses</span>
+              <span className="fc-report-note">Últimos 6 meses</span>
             </div>
             <MonthlyBarsChart
               items={monthlySeries.map((item) => ({
@@ -211,7 +211,7 @@ export function ReportsPage() {
                 <div className="fc-report-table__head">
                   <span>Categoria</span>
                   <span>Valor</span>
-                  <span>Participacao</span>
+                  <span>Participação</span>
                 </div>
                 {categoryExpenses.map((item) => {
                   const share = totals.totalExpenses > 0
@@ -235,17 +235,17 @@ export function ReportsPage() {
           <section className="fc-card">
             <div className="fc-report-card__head">
               <div>
-                <p className="fc-kicker">Movimentacao</p>
-                <h3>Historico recente</h3>
+                <p className="fc-kicker">Movimentação</p>
+                <h3>Histórico recente</h3>
               </div>
-              <span className="fc-report-note">Ultimos lancamentos registrados</span>
+              <span className="fc-report-note">Últimos lançamentos registrados</span>
             </div>
             {!recentTransactions.length ? (
-              <div className="fc-empty">Nenhum lancamento recente encontrado.</div>
+              <div className="fc-empty">Nenhum lançamento recente encontrado.</div>
             ) : (
               <div className="fc-report-table">
                 <div className="fc-report-table__head fc-report-table__head--transactions">
-                  <span>Descricao</span>
+                  <span>Descrição</span>
                   <span>Categoria</span>
                   <span>Data</span>
                   <span>Valor</span>
