@@ -107,6 +107,7 @@ Para gerar um APK Android no GitHub, o repositorio agora possui o workflow:
 Quando ele roda com sucesso, o APK fica publicado na release:
 
 - `https://github.com/GaMeredija/FinControl/releases/tag/mobile-preview-latest`
+- arquivo esperado: `fincontrol-mobile-release.apk`
 
 ## Persistencia
 
